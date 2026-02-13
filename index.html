@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D' Lirios Luxury Platinum - Sonia Vélez</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: linear-gradient(135deg, #c5a059 0%, #f7efad 50%, #c5a059 100%); --bg: #030303; }
+        body { background: var(--bg); color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; scroll-behavior: smooth; }
+        h1, h2, h3, .brand { font-family: 'Cormorant Garamond', serif; }
+
+        header { padding: 40px 20px; text-align: center; border-bottom: 1px solid rgba(197, 160, 89, 0.2); }
+        .brand { font-size: 3.8rem; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; letter-spacing: 4px; }
+        .owner { font-size: 0.9rem; letter-spacing: 10px; color: #888; text-transform: uppercase; margin-top: 10px; }
+
+        .nav-sticky { position: sticky; top: 0; z-index: 1000; background: rgba(3, 3, 3, 0.9); backdrop-filter: blur(20px); padding: 15px; border-bottom: 1px solid #222; }
+        .filter-grid { max-width: 1400px; margin: auto; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        
+        select, .search { background: #111; border: 1px solid #333; color: #fff; padding: 10px; border-radius: 4px; font-family: 'Montserrat'; outline: none; font-size: 0.8rem; }
+
+        .ws-float { position: fixed; bottom: 30px; left: 30px; z-index: 9999; background: #25d366; color: white; border-radius: 50px; padding: 12px 20px; display: flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; font-size: 0.75rem; border: 1px solid #c5a059; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.4s; }
+
+        .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 15px; padding: 30px; max-width: 1600px; margin: auto; }
+        @media (max-width: 1400px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 800px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+
+        .card { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 15px; transition: 0.4s; position: relative; cursor: pointer; text-align: center; }
+        .card:hover { border-color: #c5a059; transform: translateY(-5px); box-shadow: 0 0 30px rgba(197, 160, 89, 0.1); }
+        .img-box { width: 100%; height: 200px; overflow: hidden; margin-bottom: 12px; border-radius: 2px; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .cat-label { font-family: 'Cormorant Garamond'; font-style: italic; color: #888; font-size: 0.9rem; }
+        .price { font-size: 1.3rem; margin-top: 8px; font-family: 'Cormorant Garamond'; color: #fff; }
+
+        .btn-luxe { background: transparent; border: 1px solid #c5a059; color: #c5a059; padding: 8px 15px; cursor: pointer; text-transform: uppercase; font-size: 0.7rem; font-weight: bold; transition: 0.3s; }
+        .btn-luxe:hover { background: #c5a059; color: #000; }
+
+        #cart { position: fixed; right: -350px; top: 0; bottom: 0; width: 300px; background: #050505; border-left: 1px solid #c5a059; padding: 25px; transition: 0.5s; z-index: 2000; }
+        #cart.active { right: 0; }
+
+        .ticket-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 5000; justify-content: center; align-items: center; }
+        .ticket-paper { background: #fff; color: #000; width: 320px; padding: 30px; font-family: 'Courier New', monospace; }
+
+        @media print { .no-print { display: none !important; } .ticket-modal { display: flex !important; position: static; } }
+        footer { padding: 40px; text-align: center; border-top: 1px solid #111; color: #444; font-size: 0.7rem; letter-spacing: 5px; }
+    </style>
+</head>
+<body>
+
+<a href="https://wa.me/5492254531229" class="ws-float no-print" target="_blank">💬 CONSULTAS</a>
+
+<header class="no-print">
+    <h1 class="brand">LENCERÍA   D`LIRIOS</h1>
+    <div class="owner">Sonia   Vélez</div>
+</header>
+
+<div class="nav-sticky no-print">
+    <div class="filter-grid">
+        <input type="text" id="f-search" class="search" placeholder="🔍 Buscar Art." oninput="filter()">
+        <select id="f-tipo" onchange="filter()"><option value="">TIPO</option></select>
+        <select id="f-marca" onchange="filter()"><option value="">MARCA</option></select>
+        <select id="f-talle" onchange="filter()"><option value="">TALLE</option></select>
+        <div style="flex-grow: 1;"></div>
+        <button class="btn-luxe" onclick="toggleCart()">🛒 (<span id="count">0</span>)</button>
+        <button class="btn-luxe" onclick="checkPass()">⚙️</button>
+    </div>
+    <div id="admin-panel" style="display:none; padding-top:15px; text-align:center; border-top:1px solid #333; margin-top:15px; background: rgba(197, 160, 89, 0.05);">
+        <span style="color: #c5a059; font-size: 0.7rem; display: block; margin-bottom: 10px;">PANEL DE CONTROL PROTEGIDO</span>
+        <button class="btn-luxe" onclick="downloadTemplate()">📥 Descargar Plantilla</button>
+        <label for="upload" class="btn-luxe">📤 Cargar Stock Excel</label>
+        <input type="file" id="upload" style="display:none" accept=".xlsx">
+        <button class="btn-luxe" onclick="closeAdmin()" style="border-color: #ff4444; color: #ff4444; margin-left: 10px;">Cerrar Panel</button>
+    </div>
+</div>
+
+<div class="grid" id="main-grid"></div>
+
+<div id="cart">
+    <h2 style="color:#c5a059;">Tu Selección</h2>
+    <div id="cart-items" style="margin: 20px 0; font-size: 0.8rem;"></div>
+    <div style="border-top:1px solid #222; padding-top:20px;">
+        <h3 style="display:flex; justify-content:space-between;">Total: <span id="total">$0</span></h3>
+        <button class="btn-luxe" style="width:100%; margin-top:20px;" onclick="showTicket()">Cerrar Venta</button>
+    </div>
+</div>
+
+<div class="ticket-modal" id="modal-ticket">
+    <div class="ticket-paper">
+        <center><h3>D' LIRIOS LUXURY</h3><small>Sonia Vélez</small></center>
+        <br>
+        <div style="font-size: 0.7rem; display: flex; justify-content: space-between;"><span id="t-date"></span><span id="t-id"></span></div>
+        <hr><div id="t-items" style="font-size: 0.7rem;"></div><hr>
+        <div style="display:flex; justify-content:space-between; font-weight:bold;"><span>TOTAL:</span><span id="t-total"></span></div>
+        <div id="qrcode" style="display:flex; justify-content:center; margin: 20px 0;"></div>
+        <div class="no-print">
+            <button class="btn-luxe" style="width:100%; background:#000; color:#fff;" onclick="window.print()">🖨️ IMPRIMIR</button>
+            <button class="btn-luxe" style="width:100%; margin-top:10px;" onclick="sendToSonia()">📱 ENVIAR A SONIA</button>
+            <button class="btn-luxe" style="width:100%; margin-top:10px; border:none;" onclick="location.reload()">Finalizar</button>
+        </div>
+    </div>
+</div>
+
+<footer class="no-print">DISEÑO <b>MARCELO MURAÑA</b></footer>
+
+<script>
+    let db, products = [], cart = [];
+    const ADMIN_PASS = "sonia2026"; // <-- CAMBIA TU CONTRASEÑA AQUÍ
+
+    const request = indexedDB.open("DliriosSecureLuxe", 1);
+    request.onupgradeneeded = (e) => { e.target.result.createObjectStore("stock", { keyPath: "id", autoIncrement: true }); };
+    request.onsuccess = (e) => { db = e.target.result; sync(); };
+
+    function checkPass() {
+        const pass = prompt("Ingrese la contraseña de administración:");
+        if (pass === ADMIN_PASS) {
+            document.getElementById('admin-panel').style.display = 'block';
+        } else if (pass !== null) {
+            alert("Contraseña incorrecta.");
+        }
+    }
+
+    function closeAdmin() { document.getElementById('admin-panel').style.display = 'none'; }
+
+    function sync() {
+        db.transaction("stock").objectStore("stock").getAll().onsuccess = (e) => {
+            products = e.target.result;
+            const unique = (f) => [...new Set(products.map(p => p[f]))].sort();
+            fillS("f-tipo", unique("Categoria")); fillS("f-marca", unique("Marca")); fillS("f-talle", unique("Talle"));
+            render(products);
+        };
+    }
+
+    function fillS(id, list) {
+        const s = document.getElementById(id);
+        const label = id === "f-tipo" ? "TIPO" : id.split('-')[1].toUpperCase();
+        s.innerHTML = `<option value="">${label}</option>`;
+        list.forEach(v => { if(v) s.innerHTML += `<option value="${v}">${v}</option>`; });
+    }
+
+    function render(data) {
+        const g = document.getElementById('main-grid'); g.innerHTML = "";
+        data.forEach(p => {
+            g.innerHTML += `
+                <div class="card" onclick="addToCart(${p.id})">
+                    <div class="img-box"><img src="${p.Imagen || 'https://images.unsplash.com/photo-1621335829175-95f437384d7c?w=400'}"></div>
+                    <div class="cat-label">${p.Categoria || 'Prenda'}</div>
+                    <div style="font-size:0.6rem; letter-spacing:2px; color:#c5a059; font-weight:600; text-transform:uppercase;">${p.Marca}</div>
+                    <div style="font-family:'Cormorant Garamond'; font-size:1.1rem; margin:3px 0;">Art. ${p.Articulo}</div>
+                    <div style="font-size:0.7rem; color:#666;">Talle ${p.Talle}</div>
+                    <div class="price">$${p.Precio.toLocaleString()}</div>
+                </div>`;
+        });
+    }
+
+    function addToCart(id) {
+        const p = products.find(x => x.id === id);
+        if(p.Stock > 0) { cart.push(p); updateC(); document.getElementById('cart').classList.add('active'); }
+    }
+
+    function updateC() {
+        document.getElementById('count').innerText = cart.length;
+        document.getElementById('cart-items').innerHTML = cart.map(i => `<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>${i.Categoria} ${i.Marca}</span><span>$${i.Precio}</span></div>`).join('');
+        document.getElementById('total').innerText = "$" + cart.reduce((s, x) => s + x.Precio, 0).toLocaleString();
+    }
+
+    function filter() {
+        const s = document.getElementById('f-search').value.toLowerCase();
+        const t = document.getElementById('f-tipo').value;
+        const m = document.getElementById('f-marca').value;
+        const ta = document.getElementById('f-talle').value;
+        render(products.filter(p => (!s || p.Articulo.toString().includes(s)) && (!t || p.Categoria === t) && (!m || p.Marca === m) && (!ta || p.Talle === ta)));
+    }
+
+    function showTicket() {
+        if(!cart.length) return;
+        document.getElementById('t-date').innerText = new Date().toLocaleDateString();
+        document.getElementById('t-id').innerText = "V-"+Math.floor(Math.random()*999);
+        document.getElementById('t-items').innerHTML = cart.map(i => `<div>${i.Categoria} ${i.Marca} Art.${i.Articulo} - $${i.Precio}</div>`).join('');
+        document.getElementById('t-total').innerText = document.getElementById('total').innerText;
+        document.getElementById('modal-ticket').style.display = 'flex';
+        document.getElementById('qrcode').innerHTML = "";
+        new QRCode(document.getElementById("qrcode"), { text: "DLIRIOS-"+Date.now(), width: 100, height: 100 });
+    }
+
+    function sendToSonia() {
+        const msg = `Venta Realizada: ${document.getElementById('t-total').innerText}\nItems: ${cart.map(c => c.Categoria + " " + c.Marca + " Art." + c.Articulo).join(', ')}`;
+        window.open(`https://wa.me/5492254531229?text=${encodeURIComponent(msg)}`);
+    }
+
+    function toggleCart() { document.getElementById('cart').classList.toggle('active'); }
+
+    document.getElementById('upload').addEventListener('change', function(e) {
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+            const data = XLSX.utils.sheet_to_json(XLSX.read(evt.target.result, { type: 'binary' }).Sheets["Stock"]);
+            const tx = db.transaction("stock", "readwrite");
+            const store = tx.objectStore("stock");
+            store.clear().onsuccess = () => data.forEach(item => store.add(item));
+            tx.oncomplete = () => { alert("Catálogo Actualizado"); sync(); closeAdmin(); };
+        };
+        reader.readAsBinaryString(e.target.files[0]);
+    });
+
+    function downloadTemplate() {
+        const data = [{Marca: "Natubel", Categoria: "Conjunto", Articulo: "100", Talle: "95", Color: "Rojo", Precio: 15000, Stock: 10, Imagen: ""}];
+        const ws = XLSX.utils.json_to_sheet(data);
+        const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Stock");
+        XLSX.writeFile(wb, "Dlirios_Plantilla.xlsx");
+    }
+</script>
+</body>
+</html>
