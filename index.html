@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
+<!-- saved from url=(0077)file:///C:/Users/marce/OneDrive/Desktop/Mura%C3%B1a_Global_2026/lenceria.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>D' Lirios Luxury Platinum - Sonia Vélez</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+    <script src="./D&#39; Lirios Luxury Platinum - Sonia Vélez_files/xlsx.full.min.js.descarga"></script>
+    <script src="./D&#39; Lirios Luxury Platinum - Sonia Vélez_files/qrcode.min.js.descarga"></script>
+    <link href="./D&#39; Lirios Luxury Platinum - Sonia Vélez_files/css2" rel="stylesheet">
     <style>
         :root { --gold: linear-gradient(135deg, #c5a059 0%, #f7efad 50%, #c5a059 100%); --bg: #030303; }
         body { background: var(--bg); color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; scroll-behavior: smooth; }
@@ -23,26 +23,21 @@
 
         .ws-float { position: fixed; bottom: 30px; left: 30px; z-index: 9999; background: #25d366; color: white; border-radius: 50px; padding: 12px 20px; display: flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; font-size: 0.75rem; border: 1px solid #c5a059; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.4s; }
 
-        .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 15px; padding: 30px; max-width: 1600px; margin: auto; }
-        @media (max-width: 1400px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 800px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; padding: 30px; max-width: 1600px; margin: auto; }
 
         .card { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 15px; transition: 0.4s; position: relative; cursor: pointer; text-align: center; }
         .card:hover { border-color: #c5a059; transform: translateY(-5px); box-shadow: 0 0 30px rgba(197, 160, 89, 0.1); }
-        .img-box { width: 100%; height: 200px; overflow: hidden; margin-bottom: 12px; border-radius: 2px; }
+        .img-box { width: 100%; height: 250px; overflow: hidden; margin-bottom: 12px; background: #111; }
         .img-box img { width: 100%; height: 100%; object-fit: cover; }
-
-        .cat-label { font-family: 'Cormorant Garamond'; font-style: italic; color: #888; font-size: 0.9rem; }
-        .price { font-size: 1.3rem; margin-top: 8px; font-family: 'Cormorant Garamond'; color: #fff; }
 
         .btn-luxe { background: transparent; border: 1px solid #c5a059; color: #c5a059; padding: 8px 15px; cursor: pointer; text-transform: uppercase; font-size: 0.7rem; font-weight: bold; transition: 0.3s; }
         .btn-luxe:hover { background: #c5a059; color: #000; }
 
-        #cart { position: fixed; right: -350px; top: 0; bottom: 0; width: 300px; background: #050505; border-left: 1px solid #c5a059; padding: 25px; transition: 0.5s; z-index: 2000; }
+        #cart { position: fixed; right: -350px; top: 0; bottom: 0; width: 300px; background: #050505; border-left: 1px solid #c5a059; padding: 25px; transition: 0.5s; z-index: 2000; overflow-y: auto; }
         #cart.active { right: 0; }
 
         .ticket-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 5000; justify-content: center; align-items: center; }
-        .ticket-paper { background: #fff; color: #000; width: 320px; padding: 30px; font-family: 'Courier New', monospace; }
+        .ticket-paper { background: #fff; color: #000; width: 320px; padding: 30px; font-family: 'Courier New', monospace; box-shadow: 0 0 50px rgba(255,255,255,0.1); }
 
         @media print { .no-print { display: none !important; } .ticket-modal { display: flex !important; position: static; } }
         footer { padding: 40px; text-align: center; border-top: 1px solid #111; color: #444; font-size: 0.7rem; letter-spacing: 5px; }
@@ -53,37 +48,105 @@
 <a href="https://wa.me/5492254531229" class="ws-float no-print" target="_blank">💬 CONSULTAS</a>
 
 <header class="no-print">
-    <h1 class="brand">LENCERÍA   D`LIRIOS</h1>
-    <div class="owner">Sonia   Vélez</div>
+    <h1 class="brand">LENCERÍA D`LIRIOS</h1>
+    <div class="owner">Sonia Vélez</div>
 </header>
 
 <div class="nav-sticky no-print">
     <div class="filter-grid">
         <input type="text" id="f-search" class="search" placeholder="🔍 Buscar Art." oninput="filter()">
-        <select id="f-tipo" onchange="filter()"><option value="">TIPO</option></select>
-        <select id="f-marca" onchange="filter()"><option value="">MARCA</option></select>
-        <select id="f-talle" onchange="filter()"><option value="">TALLE</option></select>
+        <select id="f-tipo" onchange="filter()"><option value="">TIPO</option><option value="Conjunto">Conjunto</option><option value="Conjunto Taza Soft colaless">Conjunto Taza Soft colaless</option><option value="Packx2">Packx2</option><option value="body ">body </option><option value="conjunto">conjunto</option><option value="conjunto ">conjunto </option><option value="pack x3">pack x3</option></select>
+        <select id="f-marca" onchange="filter()"><option value="">MARCA</option><option value="Dolcisima">Dolcisima</option><option value="Marcela Koury">Marcela Koury</option><option value="Melifera">Melifera</option><option value="Natubel">Natubel</option><option value="Tiento ">Tiento </option></select>
+        <select id="f-talle" onchange="filter()"><option value="">TALLE</option><option value="100">100</option><option value="4">4</option><option value="90">90</option><option value="90/95">90/95</option><option value="95">95</option></select>
         <div style="flex-grow: 1;"></div>
         <button class="btn-luxe" onclick="toggleCart()">🛒 (<span id="count">0</span>)</button>
-        <button class="btn-luxe" onclick="checkPass()">⚙️</button>
+        <button class="btn-luxe" onclick="checkPass()">⚙️ Admin</button>
     </div>
-    <div id="admin-panel" style="display:none; padding-top:15px; text-align:center; border-top:1px solid #333; margin-top:15px; background: rgba(197, 160, 89, 0.05);">
+    
+    <div id="admin-panel" style="display:none; padding:20px; text-align:center; border-top:1px solid #333; margin-top:15px; background: rgba(197, 160, 89, 0.05);">
         <span style="color: #c5a059; font-size: 0.7rem; display: block; margin-bottom: 10px;">PANEL DE CONTROL PROTEGIDO</span>
         <button class="btn-luxe" onclick="downloadTemplate()">📥 Descargar Plantilla</button>
-        <label for="upload" class="btn-luxe">📤 Cargar Stock Excel</label>
-        <input type="file" id="upload" style="display:none" accept=".xlsx">
-        <button class="btn-luxe" onclick="closeAdmin()" style="border-color: #ff4444; color: #ff4444; margin-left: 10px;">Cerrar Panel</button>
+        <label for="upload" class="btn-luxe" style="margin: 0 10px;">📤 Cargar Stock Excel</label>
+        <input type="file" id="upload" style="display:none" accept=".xlsx, .xls">
+        <button class="btn-luxe" onclick="closeAdmin()" style="border-color: #ff4444; color: #ff4444;">Cerrar</button>
     </div>
 </div>
 
-<div class="grid" id="main-grid"></div>
+<div class="grid" id="main-grid">
+                <div class="card" onclick="addToCart(61)">
+                    <div class="img-box"><img src="./D&#39; Lirios Luxury Platinum - Sonia Vélez_files/images" onerror="this.src=&#39;https://via.placeholder.com/300x400?text=Sin+Foto&#39;"></div>
+                    <div style="font-family:&#39;Cormorant Garamond&#39;; font-style:italic; color:#888; font-size:0.9rem;">pack x3</div>
+                    <div style="font-size:0.6rem; letter-spacing:2px; color:#c5a059; font-weight:600; text-transform:uppercase;">Melifera</div>
+                    <div style="font-family:&#39;Cormorant Garamond&#39;; font-size:1.1rem; margin:3px 0;">Art. 100</div>
+                    <div style="font-size:0.7rem; color:#666;">Talle 95 | Color varios</div>
+                    <div style="font-size:0.6rem; color:#444;">Stock: 10</div>
+                    <div class="price">$15.000</div>
+                </div>
+                <div class="card" onclick="addToCart(62)">
+                    <div class="img-box"><img src="data:image/jpeg;base64,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" onerror="this.src=&#39;https://via.placeholder.com/300x400?text=Sin+Foto&#39;"></div>
+                    <div style="font-family:&#39;Cormorant Garamond&#39;; font-style:italic; color:#888; font-size:0.9rem;">body </div>
+                    <div style="font-size:0.6rem; letter-spacing:2px; color:#c5a059; font-weight:600; text-transform:uppercase;">Natubel</div>
+                    <div style="font-family:&#39;Cormorant Garamond&#39;; font-size:1.1rem; margin:3px 0;">Art. 120</div>
+                    <div style="font-size:0.7rem; color:#666;">Talle 100 | Color Negro</div>
+                    <div style="font-size:0.6rem; color:#444;">Stock: 8</div>
+                    <div class="price">$17.000</div>
+                </div>
+                <div class="card" onclick="addToCart(63)">
+                    <div class="img-box"><img src="./D&#39; Lirios Luxury Platinum - Sonia Vélez_files/images(1)" onerror="this.src=&#39;https://via.placeholder.com/300x400?text=Sin+Foto&#39;"></div>
+                    <div style="font-family:&#39;Cormorant Garamond&#39;; font-style:italic; color:#888; font-size:0.9rem;">Conjunto</div>
+                    <div style="font-size:0.6rem; letter-spacing:2px; color:#c5a059; font-weight:600; text-transform:uppercase;">Marcela Koury</div>
+                    <div style="font-family:&#39;Cormorant Garamond&#39;; font-size:1.1rem; margin:3px 0;">Art. 123</div>
+                    <div style="font-size:0.7rem; color:#666;">Talle 90 | Color rojo</div>
+                    <div style="font-size:0.6rem; color:#444;">Stock: 10</div>
+                    <div class="price">$21.000</div>
+                </div>
+                <div class="card" onclick="addToCart(64)">
+                    <div class="img-box"><img src="./D&#39; Lirios Luxury Platinum - Sonia Vélez_files/D_NQ_NP_2X_631356-MLA100477403482_122025-F.webp" onerror="this.src=&#39;https://via.placeholder.com/300x400?text=Sin+Foto&#39;"></div>
+                    <div style="font-family:&#39;Cormorant Garamond&#39;; font-style:italic; color:#888; font-size:0.9rem;">Packx2</div>
+                    <div style="font-size:0.6rem; letter-spacing:2px; color:#c5a059; font-weight:600; text-transform:uppercase;">Dolcisima</div>
+                    <div style="font-family:&#39;Cormorant Garamond&#39;; font-size:1.1rem; margin:3px 0;">Art. 11</div>
+                    <div style="font-size:0.7rem; color:#666;">Talle 90/95 | Color varios</div>
+                    <div style="font-size:0.6rem; color:#444;">Stock: 10</div>
+                    <div class="price">$25.000</div>
+                </div>
+                <div class="card" onclick="addToCart(65)">
+                    <div class="img-box"><img src="./D&#39; Lirios Luxury Platinum - Sonia Vélez_files/NTB98.jpg" onerror="this.src=&#39;https://via.placeholder.com/300x400?text=Sin+Foto&#39;"></div>
+                    <div style="font-family:&#39;Cormorant Garamond&#39;; font-style:italic; color:#888; font-size:0.9rem;">conjunto</div>
+                    <div style="font-size:0.6rem; letter-spacing:2px; color:#c5a059; font-weight:600; text-transform:uppercase;">Natubel</div>
+                    <div style="font-family:&#39;Cormorant Garamond&#39;; font-size:1.1rem; margin:3px 0;">Art. 321</div>
+                    <div style="font-size:0.7rem; color:#666;">Talle 95 | Color varios</div>
+                    <div style="font-size:0.6rem; color:#444;">Stock: 12</div>
+                    <div class="price">$28.000</div>
+                </div>
+                <div class="card" onclick="addToCart(66)">
+                    <div class="img-box"><img src="./D&#39; Lirios Luxury Platinum - Sonia Vélez_files/images(2)" onerror="this.src=&#39;https://via.placeholder.com/300x400?text=Sin+Foto&#39;"></div>
+                    <div style="font-family:&#39;Cormorant Garamond&#39;; font-style:italic; color:#888; font-size:0.9rem;">conjunto </div>
+                    <div style="font-size:0.6rem; letter-spacing:2px; color:#c5a059; font-weight:600; text-transform:uppercase;">Natubel</div>
+                    <div style="font-family:&#39;Cormorant Garamond&#39;; font-size:1.1rem; margin:3px 0;">Art. 111</div>
+                    <div style="font-size:0.7rem; color:#666;">Talle 90 | Color blanco</div>
+                    <div style="font-size:0.6rem; color:#444;">Stock: 10</div>
+                    <div class="price">$20.000</div>
+                </div>
+                <div class="card" onclick="addToCart(67)">
+                    <div class="img-box"><img src="./D&#39; Lirios Luxury Platinum - Sonia Vélez_files/6w31GAM.jpeg" onerror="this.src=&#39;https://via.placeholder.com/300x400?text=Sin+Foto&#39;"></div>
+                    <div style="font-family:&#39;Cormorant Garamond&#39;; font-style:italic; color:#888; font-size:0.9rem;">Conjunto Taza Soft colaless</div>
+                    <div style="font-size:0.6rem; letter-spacing:2px; color:#c5a059; font-weight:600; text-transform:uppercase;">Tiento </div>
+                    <div style="font-family:&#39;Cormorant Garamond&#39;; font-size:1.1rem; margin:3px 0;">Art. 826</div>
+                    <div style="font-size:0.7rem; color:#666;">Talle 4 | Color blanco</div>
+                    <div style="font-size:0.6rem; color:#444;">Stock: 10</div>
+                    <div class="price">$18.900</div>
+                </div></div>
 
 <div id="cart">
-    <h2 style="color:#c5a059;">Tu Selección</h2>
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2 style="color:#c5a059; margin:0;">Tu Selección</h2>
+        <button onclick="toggleCart()" style="background:none; border:none; color:#c5a059; font-size:1.5rem; cursor:pointer;">×</button>
+    </div>
     <div id="cart-items" style="margin: 20px 0; font-size: 0.8rem;"></div>
     <div style="border-top:1px solid #222; padding-top:20px;">
         <h3 style="display:flex; justify-content:space-between;">Total: <span id="total">$0</span></h3>
         <button class="btn-luxe" style="width:100%; margin-top:20px;" onclick="showTicket()">Cerrar Venta</button>
+        <button class="btn-luxe" style="width:100%; margin-top:10px; border-color:#666; color:#666;" onclick="clearCart()">Vaciar Carrito</button>
     </div>
 </div>
 
@@ -98,7 +161,7 @@
         <div class="no-print">
             <button class="btn-luxe" style="width:100%; background:#000; color:#fff;" onclick="window.print()">🖨️ IMPRIMIR</button>
             <button class="btn-luxe" style="width:100%; margin-top:10px;" onclick="sendToSonia()">📱 ENVIAR A SONIA</button>
-            <button class="btn-luxe" style="width:100%; margin-top:10px; border:none;" onclick="location.reload()">Finalizar</button>
+            <button class="btn-luxe" style="width:100%; margin-top:10px; border:none;" onclick="finalizarVenta()">Finalizar y Descontar Stock</button>
         </div>
     </div>
 </div>
@@ -107,78 +170,146 @@
 
 <script>
     let db, products = [], cart = [];
-    const ADMIN_PASS = "sonia2026"; // <-- CAMBIA TU CONTRASEÑA AQUÍ
+    const ADMIN_PASS = "sonia2026"; 
 
-    const request = indexedDB.open("DliriosSecureLuxe", 1);
-    request.onupgradeneeded = (e) => { e.target.result.createObjectStore("stock", { keyPath: "id", autoIncrement: true }); };
+    // Inicializar Base de Datos
+    const request = indexedDB.open("DliriosSecureLuxe", 2);
+    request.onupgradeneeded = (e) => { 
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains("stock")) {
+            db.createObjectStore("stock", { keyPath: "id", autoIncrement: true });
+        }
+    };
     request.onsuccess = (e) => { db = e.target.result; sync(); };
 
     function checkPass() {
-        const pass = prompt("Ingrese la contraseña de administración:");
-        if (pass === ADMIN_PASS) {
+        if(prompt("Contraseña de administración:") === ADMIN_PASS) {
             document.getElementById('admin-panel').style.display = 'block';
-        } else if (pass !== null) {
-            alert("Contraseña incorrecta.");
-        }
+        } else { alert("Acceso denegado."); }
     }
 
     function closeAdmin() { document.getElementById('admin-panel').style.display = 'none'; }
 
     function sync() {
-        db.transaction("stock").objectStore("stock").getAll().onsuccess = (e) => {
+        const tx = db.transaction("stock", "readonly");
+        tx.objectStore("stock").getAll().onsuccess = (e) => {
             products = e.target.result;
-            const unique = (f) => [...new Set(products.map(p => p[f]))].sort();
-            fillS("f-tipo", unique("Categoria")); fillS("f-marca", unique("Marca")); fillS("f-talle", unique("Talle"));
+            updateFilters();
             render(products);
         };
     }
 
+    function updateFilters() {
+        const unique = (f) => [...new Set(products.map(p => p[f]))].filter(Boolean).sort();
+        fillS("f-tipo", unique("Categoria")); 
+        fillS("f-marca", unique("Marca")); 
+        fillS("f-talle", unique("Talle"));
+    }
+
     function fillS(id, list) {
         const s = document.getElementById(id);
-        const label = id === "f-tipo" ? "TIPO" : id.split('-')[1].toUpperCase();
+        const label = id.split('-')[1].toUpperCase();
         s.innerHTML = `<option value="">${label}</option>`;
-        list.forEach(v => { if(v) s.innerHTML += `<option value="${v}">${v}</option>`; });
+        list.forEach(v => s.innerHTML += `<option value="${v}">${v}</option>`);
     }
 
     function render(data) {
-        const g = document.getElementById('main-grid'); g.innerHTML = "";
+        const g = document.getElementById('main-grid'); 
+        g.innerHTML = data.length ? "" : "<p style='grid-column:1/-1; text-align:center; color:#666;'>No hay artículos para mostrar.</p>";
         data.forEach(p => {
+            const imgUrl = p.Imagen || 'https://images.unsplash.com/photo-1621335829175-95f437384d7c?w=400';
             g.innerHTML += `
                 <div class="card" onclick="addToCart(${p.id})">
-                    <div class="img-box"><img src="${p.Imagen || 'https://images.unsplash.com/photo-1621335829175-95f437384d7c?w=400'}"></div>
-                    <div class="cat-label">${p.Categoria || 'Prenda'}</div>
+                    <div class="img-box"><img src="${imgUrl}" onerror="this.src='https://via.placeholder.com/300x400?text=Sin+Foto'"></div>
+                    <div style="font-family:'Cormorant Garamond'; font-style:italic; color:#888; font-size:0.9rem;">${p.Categoria}</div>
                     <div style="font-size:0.6rem; letter-spacing:2px; color:#c5a059; font-weight:600; text-transform:uppercase;">${p.Marca}</div>
                     <div style="font-family:'Cormorant Garamond'; font-size:1.1rem; margin:3px 0;">Art. ${p.Articulo}</div>
-                    <div style="font-size:0.7rem; color:#666;">Talle ${p.Talle}</div>
+                    <div style="font-size:0.7rem; color:#666;">Talle ${p.Talle} | Color ${p.Color || '-'}</div>
+                    <div style="font-size:0.6rem; color:#444;">Stock: ${p.Stock}</div>
                     <div class="price">$${p.Precio.toLocaleString()}</div>
                 </div>`;
         });
     }
 
+    // CARGA DE EXCEL MEJORADA
+    document.getElementById('upload').addEventListener('change', function(e) {
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+            const workbook = XLSX.read(evt.target.result, { type: 'binary' });
+            const sheetName = workbook.SheetNames.find(n => n.toLowerCase().includes("stock")) || workbook.SheetNames[0];
+            const rawData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+            const cleanData = rawData.map(item => {
+                const standardized = {};
+                for (let key in item) {
+                    const k = key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                    if (k.includes("marca")) standardized.Marca = String(item[key]);
+                    if (k.includes("categor")) standardized.Categoria = String(item[key]);
+                    if (k.includes("art")) standardized.Articulo = String(item[key]);
+                    if (k.includes("tall")) standardized.Talle = String(item[key]);
+                    if (k.includes("color")) standardized.Color = String(item[key]);
+                    if (k.includes("prec")) standardized.Precio = parseFloat(item[key]) || 0;
+                    if (k.includes("stock")) standardized.Stock = parseInt(item[key]) || 0;
+                    if (k.includes("imag")) standardized.Imagen = String(item[key]);
+                }
+                return standardized;
+            }).filter(i => i.Articulo);
+
+            const tx = db.transaction("stock", "readwrite");
+            const store = tx.objectStore("stock");
+            store.clear().onsuccess = () => cleanData.forEach(item => store.add(item));
+            tx.oncomplete = () => { 
+                alert(`¡Éxito! Se cargaron ${cleanData.length} artículos.`); 
+                sync(); 
+                closeAdmin(); 
+            };
+        };
+        reader.readAsBinaryString(e.target.files[0]);
+    });
+
     function addToCart(id) {
         const p = products.find(x => x.id === id);
-        if(p.Stock > 0) { cart.push(p); updateC(); document.getElementById('cart').classList.add('active'); }
+        if(p && p.Stock > 0) {
+            cart.push(p);
+            updateC();
+            document.getElementById('cart').classList.add('active');
+        } else { alert("Sin stock disponible"); }
     }
 
     function updateC() {
         document.getElementById('count').innerText = cart.length;
-        document.getElementById('cart-items').innerHTML = cart.map(i => `<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>${i.Categoria} ${i.Marca}</span><span>$${i.Precio}</span></div>`).join('');
+        document.getElementById('cart-items').innerHTML = cart.map((i, idx) => `
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px; border-bottom:1px solid #111; padding-bottom:5px;">
+                <span>${i.Marca} Art.${i.Articulo}</span>
+                <span>$${i.Precio.toLocaleString()} <button onclick="removeFromCart(${idx})" style="background:none; border:none; color:red; cursor:pointer;">×</button></span>
+            </div>`).join('');
         document.getElementById('total').innerText = "$" + cart.reduce((s, x) => s + x.Precio, 0).toLocaleString();
     }
+
+    function removeFromCart(index) { cart.splice(index, 1); updateC(); }
+    function clearCart() { cart = []; updateC(); toggleCart(); }
+    function toggleCart() { document.getElementById('cart').classList.toggle('active'); }
 
     function filter() {
         const s = document.getElementById('f-search').value.toLowerCase();
         const t = document.getElementById('f-tipo').value;
         const m = document.getElementById('f-marca').value;
         const ta = document.getElementById('f-talle').value;
-        render(products.filter(p => (!s || p.Articulo.toString().includes(s)) && (!t || p.Categoria === t) && (!m || p.Marca === m) && (!ta || p.Talle === ta)));
+        
+        const filtered = products.filter(p => 
+            (!s || p.Articulo.toLowerCase().includes(s) || p.Marca.toLowerCase().includes(s)) &&
+            (!t || p.Categoria === t) &&
+            (!m || p.Marca === m) &&
+            (!ta || p.Talle === ta)
+        );
+        render(filtered);
     }
 
     function showTicket() {
         if(!cart.length) return;
-        document.getElementById('t-date').innerText = new Date().toLocaleDateString();
-        document.getElementById('t-id').innerText = "V-"+Math.floor(Math.random()*999);
-        document.getElementById('t-items').innerHTML = cart.map(i => `<div>${i.Categoria} ${i.Marca} Art.${i.Articulo} - $${i.Precio}</div>`).join('');
+        document.getElementById('t-date').innerText = new Date().toLocaleString();
+        document.getElementById('t-id').innerText = "V-" + Date.now().toString().slice(-6);
+        document.getElementById('t-items').innerHTML = cart.map(i => `<div>${i.Marca} Art.${i.Articulo} - $${i.Precio}</div>`).join('');
         document.getElementById('t-total').innerText = document.getElementById('total').innerText;
         document.getElementById('modal-ticket').style.display = 'flex';
         document.getElementById('qrcode').innerHTML = "";
@@ -186,30 +317,34 @@
     }
 
     function sendToSonia() {
-        const msg = `Venta Realizada: ${document.getElementById('t-total').innerText}\nItems: ${cart.map(c => c.Categoria + " " + c.Marca + " Art." + c.Articulo).join(', ')}`;
-        window.open(`https://wa.me/5492254531229?text=${encodeURIComponent(msg)}`);
+        const msg = `*NUEVA VENTA D'LIRIOS*%0A--------------------------%0ATOTAL: *${document.getElementById('t-total').innerText}*%0A%0AItems:%0A${cart.map(c => `• ${c.Marca} Art.${c.Articulo} ($${c.Precio})`).join('%0A')}`;
+        window.open(`https://wa.me/5492254531229?text=${msg}`);
     }
 
-    function toggleCart() { document.getElementById('cart').classList.toggle('active'); }
+    function finalizarVenta() {
+        const tx = db.transaction("stock", "readwrite");
+        const store = tx.objectStore("stock");
+        
+        cart.forEach(item => {
+            store.get(item.id).onsuccess = (e) => {
+                const p = e.target.result;
+                if(p) { p.Stock = Math.max(0, p.Stock - 1); store.put(p); }
+            };
+        });
 
-    document.getElementById('upload').addEventListener('change', function(e) {
-        const reader = new FileReader();
-        reader.onload = (evt) => {
-            const data = XLSX.utils.sheet_to_json(XLSX.read(evt.target.result, { type: 'binary' }).Sheets["Stock"]);
-            const tx = db.transaction("stock", "readwrite");
-            const store = tx.objectStore("stock");
-            store.clear().onsuccess = () => data.forEach(item => store.add(item));
-            tx.oncomplete = () => { alert("Catálogo Actualizado"); sync(); closeAdmin(); };
+        tx.oncomplete = () => {
+            alert("Venta finalizada y stock actualizado.");
+            location.reload();
         };
-        reader.readAsBinaryString(e.target.files[0]);
-    });
+    }
 
     function downloadTemplate() {
-        const data = [{Marca: "Natubel", Categoria: "Conjunto", Articulo: "100", Talle: "95", Color: "Rojo", Precio: 15000, Stock: 10, Imagen: ""}];
+        const data = [{Marca: "EJEMPLO", Categoria: "Conjunto", Articulo: "100", Talle: "95", Color: "Rojo", Precio: 15000, Stock: 10, Imagen: "URL_DE_LA_FOTO"}];
         const ws = XLSX.utils.json_to_sheet(data);
-        const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Stock");
-        XLSX.writeFile(wb, "Dlirios_Plantilla.xlsx");
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Stock");
+        XLSX.writeFile(wb, "Plantilla_Dlirios.xlsx");
     }
 </script>
-</body>
-</html>
+
+</body></html>
