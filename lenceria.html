@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D' Lirios Luxury Atelier - Sonia Vélez</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rose-gold: linear-gradient(135deg, #e2b4bd 0%, #f7d6dc 50%, #c48b9f 100%);
+            --rose-accent: #e2b4bd;
+            --rose-hover: #f0c3cb;
+            --rose-dark: #3a2228;
+            --bg-obsidian: #0a0a0c;
+            --panel-bg: rgba(18, 16, 20, 0.85);
+            --card-bg: rgba(25, 22, 28, 0.85);
+            --border-rose: rgba(226, 180, 189, 0.25);
+            --text-main: #f5f5f7;
+            --text-muted: #a19da5;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-obsidian);
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(226, 180, 189, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(196, 139, 159, 0.05) 0%, transparent 40%);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            scroll-behavior: smooth;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, .brand { font-family: 'Cormorant Garamond', serif; }
+
+        /* HERO / CARRUSEL HEADER */
+        .hero-carousel {
+            position: relative;
+            width: 100%;
+            height: 420px;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border-rose);
+        }
+
+        .carousel-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.42);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            background: radial-gradient(circle, rgba(10, 10, 12, 0.2) 0%, rgba(10, 10, 12, 0.85) 100%);
+            z-index: 2;
+        }
+
+        .brand {
+            font-size: 3.6rem;
+            font-weight: 600;
+            background: var(--rose-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+        }
+
+        .owner {
+            font-size: 0.85rem;
+            letter-spacing: 8px;
+            color: var(--rose-accent);
+            text-transform: uppercase;
+            margin-top: 8px;
+            font-weight: 300;
+        }
+
+        .hero-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            color: #f2e6e9;
+            font-size: 1.25rem;
+            margin-top: 18px;
+            max-width: 650px;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        /* Nav y Filtros */
+        .nav-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--panel-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 16px 25px;
+            border-bottom: 1px solid var(--border-rose);
+        }
+        .filter-grid {
+            max-width: 1400px;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+        
+        select, .search {
+            background: rgba(12, 10, 14, 0.85);
+            border: 1px solid var(--border-rose);
+            color: var(--text-main);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            outline: none;
+            font-size: 0.82rem;
+            transition: all 0.3s ease;
+        }
+        select:focus, .search:focus {
+            border-color: var(--rose-accent);
+            box-shadow: 0 0 12px rgba(226, 180, 189, 0.25);
+        }
+
+        /* Botón WhatsApp Flotante */
+        .ws-float {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 9999;
+            background: rgba(18, 22, 20, 0.9);
+            color: #25d366;
+            border-radius: 50px;
+            padding: 12px 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.78rem;
+            border: 1px solid rgba(37, 211, 102, 0.4);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+        }
+        .ws-float:hover {
+            transform: translateY(-3px);
+            background: #25d366;
+            color: #000;
+            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.3);
+        }
+
+        /* Grid y Tarjetas */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 22px;
+            padding: 40px 25px;
+            max-width: 1600px;
+            margin: auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-rose);
+            border-radius: 14px;
+            padding: 16px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            cursor: pointer;
+            text-align: center;
+            overflow: hidden;
+        }
+        .card:hover {
+            border-color: var(--rose-accent);
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(226, 180, 189, 0.15);
+        }
+        .img-box {
+            width: 100%;
+            height: 260px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 14px;
+            background: #121015;
+        }
+        .img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .card:hover .img-box img {
+            transform: scale(1.05);
+        }
+
+        .btn-luxe {
+            background: transparent;
+            border: 1px solid var(--rose-accent);
+            color: var(--rose-accent);
+            padding: 9px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        .btn-luxe:hover {
+            background: var(--rose-accent);
+            color: #0a0a0c;
+            box-shadow: 0 0 15px rgba(226, 180, 189, 0.3);
+        }
+
+        .price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--rose-accent);
+            margin-top: 8px;
+        }
+
+        /* Carrito Lateral */
+        #cart {
+            position: fixed;
+            right: -380px;
+            top: 0;
+            bottom: 0;
+            width: 340px;
+            background: rgba(12, 10, 14, 0.96);
+            backdrop-filter: blur(25px);
+            border-left: 1px solid var(--border-rose);
+            padding: 30px;
+            transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            z-index: 2000;
+            overflow-y: auto;
+            box-shadow: -10px 0 40px rgba(0,0,0,0.8);
+        }
+        #cart.active { right: 0; }
+
+        /* Modal Ticket Térmico */
+        .ticket-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 5, 7, 0.88);
+            backdrop-filter: blur(12px);
+            z-index: 5000;
+            justify-content: center;
+            align-items: center;
+        }
+        .ticket-paper {
+            background: #fff;
+            color: #111;
+            width: 300px;
+            padding: 25px 20px;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            border-radius: 4px;
+        }
+
+        @media print {
+            .no-print { display: none !important; }
+            .ticket-modal { display: flex !important; position: static; background: none; }
+            .ticket-paper { box-shadow: none; width: 100%; padding: 0; }
+        }
+
+        footer {
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid var(--border-rose);
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<a href="https://wa.me/5492254531229" class="ws-float no-print" target="_blank">💬 CONSULTAS</a>
+
+<!-- CABECERA CON CARRUSEL DE LENCERÍA Y ROPA ÍNTIMA -->
+<header class="hero-carousel no-print">
+    <div class="carousel-track" id="carouselTrack">
+        <div class="slide">
+            <img src="https://images.unsplash.com/photo-1596475886680-cf62686b4935?q=80&w=1200&auto=format&fit=crop" alt="Lencería Encaje Fino">
+        </div>
+        <div class="slide">
+            <img src="https://images.unsplash.com/photo-1583846783214-7229a91b20ed?q=80&w=1200&auto=format&fit=crop" alt="Conjunto de Lencería Luxury">
+        </div>
+        <div class="slide">
+            <img src="https://images.unsplash.com/photo-1617396900799-f4ec2b43c7ae?q=80&w=1200&auto=format&fit=crop" alt="Detalle Lencería de Seda">
+        </div>
+    </div>
+    <div class="hero-overlay">
+        <h1 class="brand">Lencería D`Lirios</h1>
+        <div class="owner">Sonia Vélez • Luxury Atelier</div>
+        <div class="hero-quote">"La verdadera elegancia comienza en lo que no se ve, pero se siente en la piel."</div>
+    </div>
+</header>
+
+<div class="nav-sticky no-print">
+    <div class="filter-grid">
+        <input type="text" id="f-search" class="search" placeholder="🔍 Buscar Art..." oninput="filter()">
+        <select id="f-tipo" onchange="filter()"><option value="">TIPO</option></select>
+        <select id="f-marca" onchange="filter()"><option value="">MARCA</option></select>
+        <select id="f-talle" onchange="filter()"><option value="">TALLE</option></select>
+        <div style="flex-grow: 1;"></div>
+        <button class="btn-luxe" onclick="toggleCart()">🛒 Cart (<span id="count">0</span>)</button>
+        <button class="btn-luxe" onclick="checkPass()">⚙️ Admin</button>
+    </div>
+    
+    <div id="admin-panel" style="display:none; padding:20px; text-align:center; border-top:1px solid var(--border-rose); margin-top:15px; background: rgba(226, 180, 189, 0.03); border-radius: 12px;">
+        <span style="color: var(--rose-accent); font-size: 0.75rem; letter-spacing: 2px; display: block; margin-bottom: 12px; font-weight: 600;">PANEL DE CONTROL PROTEGIDO</span>
+        <button class="btn-luxe" onclick="downloadTemplate()">📥 Descargar Plantilla</button>
+        <label for="upload" class="btn-luxe" style="margin: 0 10px; display:inline-block;">📤 Cargar Stock Excel</label>
+        <input type="file" id="upload" style="display:none" accept=".xlsx, .xls">
+        <button class="btn-luxe" onclick="closeAdmin()" style="border-color: #ff5555; color: #ff5555;">Cerrar</button>
+    </div>
+</div>
+
+<div class="grid" id="main-grid"></div>
+
+<div id="cart">
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border-rose); padding-bottom: 15px;">
+        <h2 style="color:var(--rose-accent); margin:0; font-size: 1.6rem;">Tu Selección</h2>
+        <button onclick="toggleCart()" style="background:none; border:none; color:var(--rose-accent); font-size:1.8rem; cursor:pointer;">×</button>
+    </div>
+    <div id="cart-items" style="margin: 20px 0; font-size: 0.85rem;"></div>
+    <div style="border-top:1px solid var(--border-rose); padding-top:20px;">
+        <h3 style="display:flex; justify-content:space-between; font-size: 1.3rem;">Total: <span id="total" style="color:var(--rose-accent);">$0</span></h3>
+        <button class="btn-luxe" style="width:100%; margin-top:20px; padding: 12px;" onclick="showTicket()">Cerrar Venta</button>
+        <button class="btn-luxe" style="width:100%; margin-top:10px; border-color:#555; color:#aaa;" onclick="clearCart()">Vaciar Carrito</button>
+    </div>
+</div>
+
+<div class="ticket-modal" id="modal-ticket">
+    <div class="ticket-paper">
+        <center>
+            <h3 style="margin:0; font-size: 1.1rem;">D' LIRIOS LUXURY</h3>
+            <small style="letter-spacing: 2px;">Sonia Vélez</small>
+        </center>
+        <br>
+        <div style="font-size: 0.7rem; display: flex; justify-content: space-between;"><span id="t-date"></span><span id="t-id"></span></div>
+        <hr style="border: none; border-top: 1px dashed #444; margin: 10px 0;">
+        <div id="t-items" style="font-size: 0.72rem; line-height: 1.5;"></div>
+        <hr style="border: none; border-top: 1px dashed #444; margin: 10px 0;">
+        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:0.85rem;"><span>TOTAL:</span><span id="t-total"></span></div>
+        <div id="qrcode" style="display:flex; justify-content:center; margin: 20px 0;"></div>
+        <div class="no-print">
+            <button class="btn-luxe" style="width:100%; background:#111; color:#fff; border-color:#111;" onclick="window.print()">🖨️ IMPRIMIR TICKET</button>
+            <button class="btn-luxe" style="width:100%; margin-top:10px;" onclick="sendToSonia()">📱 ENVIAR A SONIA</button>
+            <button class="btn-luxe" style="width:100%; margin-top:10px; border-color:#888; color:#333;" onclick="finalizarVenta()">Finalizar y Descontar Stock</button>
+        </div>
+    </div>
+</div>
+
+<footer class="no-print">DISEÑO <b>MARCELO MURAÑA</b></footer>
+
+<script>
+    let db, products = [], cart = [];
+    const ADMIN_PASS = "sonia2026";
+
+    // CARRUSEL AUTOMÁTICO
+    let currentSlide = 0;
+    const track = document.getElementById('carouselTrack');
+    const totalSlides = document.querySelectorAll('.slide').length;
+
+    setInterval(() => {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }, 4500);
+
+    // Inicializar Base de Datos (IndexedDB)
+    const request = indexedDB.open("DliriosSecureLuxe", 2);
+    request.onupgradeneeded = (e) => { 
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains("stock")) {
+            db.createObjectStore("stock", { keyPath: "id", autoIncrement: true });
+        }
+    };
+    request.onsuccess = (e) => { db = e.target.result; sync(); };
+
+    function checkPass() {
+        if(prompt("Contraseña de administración:") === ADMIN_PASS) {
+            document.getElementById('admin-panel').style.display = 'block';
+        } else { alert("Acceso denegado."); }
+    }
+
+    function closeAdmin() { document.getElementById('admin-panel').style.display = 'none'; }
+
+    function sync() {
+        const tx = db.transaction("stock", "readonly");
+        tx.objectStore("stock").getAll().onsuccess = (e) => {
+            products = e.target.result;
+            updateFilters();
+            render(products);
+        };
+    }
+
+    function updateFilters() {
+        const unique = (f) => [...new Set(products.map(p => p[f]))].filter(Boolean).sort();
+        fillS("f-tipo", unique("Categoria")); 
+        fillS("f-marca", unique("Marca")); 
+        fillS("f-talle", unique("Talle"));
+    }
+
+    function fillS(id, list) {
+        const s = document.getElementById(id);
+        const label = id.split('-')[1].toUpperCase();
+        s.innerHTML = `<option value="">${label}</option>`;
+        list.forEach(v => s.innerHTML += `<option value="${v}">${v}</option>`);
+    }
+
+    function render(data) {
+        const g = document.getElementById('main-grid'); 
+        g.innerHTML = data.length ? "" : "<p style='grid-column:1/-1; text-align:center; color:var(--text-muted); padding: 50px 0;'>No hay artículos para mostrar.</p>";
+        data.forEach(p => {
+            const imgUrl = p.Imagen || 'https://images.unsplash.com/photo-1596475886680-cf62686b4935?q=80&w=400';
+            g.innerHTML += `
+                <div class="card" onclick="addToCart(${p.id})">
+                    <div class="img-box"><img src="${imgUrl}" onerror="this.src='https://via.placeholder.com/300x400?text=Sin+Foto'"></div>
+                    <div style="font-family:'Cormorant Garamond'; font-style:italic; color:var(--rose-accent); font-size:0.95rem;">${p.Categoria}</div>
+                    <div style="font-size:0.65rem; letter-spacing:2px; color:var(--text-muted); font-weight:600; text-transform:uppercase; margin-top:2px;">${p.Marca}</div>
+                    <div style="font-family:'Cormorant Garamond'; font-size:1.25rem; margin:4px 0; font-weight:600;">Art. ${p.Articulo}</div>
+                    <div style="font-size:0.75rem; color:#aaa;">Talle ${p.Talle} | Color ${p.Color || '-'}</div>
+                    <div style="font-size:0.68rem; color:var(--text-muted); margin-top:4px;">Stock: ${p.Stock}</div>
+                    <div class="price">$${p.Precio.toLocaleString()}</div>
+                </div>`;
+        });
+    }
+
+    // Carga de Excel
+    document.getElementById('upload').addEventListener('change', function(e) {
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+            const workbook = XLSX.read(evt.target.result, { type: 'binary' });
+            const sheetName = workbook.SheetNames.find(n => n.toLowerCase().includes("stock")) || workbook.SheetNames[0];
+            const rawData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+            const cleanData = rawData.map(item => {
+                const standardized = {};
+                for (let key in item) {
+                    const k = key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                    if (k.includes("marca")) standardized.Marca = String(item[key]);
+                    if (k.includes("categor")) standardized.Categoria = String(item[key]);
+                    if (k.includes("art")) standardized.Articulo = String(item[key]);
+                    if (k.includes("tall")) standardized.Talle = String(item[key]);
+                    if (k.includes("color")) standardized.Color = String(item[key]);
+                    if (k.includes("prec")) standardized.Precio = parseFloat(item[key]) || 0;
+                    if (k.includes("stock")) standardized.Stock = parseInt(item[key]) || 0;
+                    if (k.includes("imag")) standardized.Imagen = String(item[key]);
+                }
+                return standardized;
+            }).filter(i => i.Articulo);
+
+            const tx = db.transaction("stock", "readwrite");
+            const store = tx.objectStore("stock");
+            store.clear().onsuccess = () => cleanData.forEach(item => store.add(item));
+            tx.oncomplete = () => { 
+                alert(`¡Éxito! Se cargaron ${cleanData.length} artículos.`); 
+                sync(); 
+                closeAdmin(); 
+            };
+        };
+        reader.readAsBinaryString(e.target.files[0]);
+    });
+
+    function addToCart(id) {
+        const p = products.find(x => x.id === id);
+        if(p && p.Stock > 0) {
+            cart.push(p);
+            updateC();
+            document.getElementById('cart').classList.add('active');
+        } else { alert("Sin stock disponible"); }
+    }
+
+    function updateC() {
+        document.getElementById('count').innerText = cart.length;
+        document.getElementById('cart-items').innerHTML = cart.map((i, idx) => `
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid var(--border-rose); padding-bottom:8px;">
+                <div>
+                    <div style="font-weight:600; color:var(--text-main);">${i.Marca} Art.${i.Articulo}</div>
+                    <div style="font-size:0.7rem; color:var(--text-muted);">Talle: ${i.Talle}</div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="color:var(--rose-accent); font-weight:600;">$${i.Precio.toLocaleString()}</div>
+                    <button onclick="removeFromCart(${idx})" style="background:none; border:none; color:#ff5555; cursor:pointer; font-size:1.1rem; padding:0;">×</button>
+                </div>
+            </div>`).join('');
+        document.getElementById('total').innerText = "$" + cart.reduce((s, x) => s + x.Precio, 0).toLocaleString();
+    }
+
+    function removeFromCart(index) { cart.splice(index, 1); updateC(); }
+    function clearCart() { cart = []; updateC(); toggleCart(); }
+    function toggleCart() { document.getElementById('cart').classList.toggle('active'); }
+
+    function filter() {
+        const s = document.getElementById('f-search').value.toLowerCase();
+        const t = document.getElementById('f-tipo').value;
+        const m = document.getElementById('f-marca').value;
+        const ta = document.getElementById('f-talle').value;
+        
+        const filtered = products.filter(p => 
+            (!s || p.Articulo.toLowerCase().includes(s) || p.Marca.toLowerCase().includes(s)) &&
+            (!t || p.Categoria === t) &&
+            (!m || p.Marca === m) &&
+            (!ta || p.Talle === ta)
+        );
+        render(filtered);
+    }
+
+    function showTicket() {
+        if(!cart.length) return;
+        document.getElementById('t-date').innerText = new Date().toLocaleString();
+        document.getElementById('t-id').innerText = "V-" + Date.now().toString().slice(-6);
+        document.getElementById('t-items').innerHTML = cart.map(i => `<div style="display:flex; justify-content:space-between;"><span>${i.Marca} Art.${i.Articulo}</span><span>$${i.Precio}</span></div>`).join('');
+        document.getElementById('t-total').innerText = document.getElementById('total').innerText;
+        document.getElementById('modal-ticket').style.display = 'flex';
+        document.getElementById('qrcode').innerHTML = "";
+        new QRCode(document.getElementById("qrcode"), { text: "DLIRIOS-"+Date.now(), width: 90, height: 90 });
+    }
+
+    function sendToSonia() {
+        const msg = `*NUEVA VENTA D'LIRIOS LUXURY*%0A--------------------------%0ATOTAL: *${document.getElementById('t-total').innerText}*%0A%0AItems:%0A${cart.map(c => `• ${c.Marca} Art.${c.Articulo} ($${c.Precio})`).join('%0A')}`;
+        window.open(`https://wa.me/5492254531229?text=${msg}`);
+    }
+
+    function finalizarVenta() {
+        const tx = db.transaction("stock", "readwrite");
+        const store = tx.objectStore("stock");
+        
+        cart.forEach(item => {
+            store.get(item.id).onsuccess = (e) => {
+                const p = e.target.result;
+                if(p) { p.Stock = Math.max(0, p.Stock - 1); store.put(p); }
+            };
+        });
+
+        tx.oncomplete = () => {
+            alert("Venta finalizada y stock actualizado.");
+            location.reload();
+        };
+    }
+
+    function downloadTemplate() {
+        const data = [{Marca: "EJEMPLO", Categoria: "Conjunto", Articulo: "100", Talle: "95", Color: "Rojo", Precio: 15000, Stock: 10, Imagen: "URL_DE_LA_FOTO"}];
+        const ws = XLSX.utils.json_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Stock");
+        XLSX.writeFile(wb, "Plantilla_Dlirios.xlsx");
+    }
+</script>
+</body>
+</html>
+
